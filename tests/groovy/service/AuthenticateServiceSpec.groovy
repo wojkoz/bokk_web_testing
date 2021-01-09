@@ -75,7 +75,21 @@ class AuthenticateServiceSpec extends Specification{
 
         when: "authUser method runs"
         UserDetails userDetails = authenticateService.authUser(userAuth)
-        then:" user is authenticated"
+        then:" user is not authenticated"
+        userDetails == null
+        thrown(UsernameNotFoundException)
+
+    }
+
+    def "should not authenticate user with wrong password"(){
+        given:" 2 users in database"
+        userService.createUser(createUserDtoList[0])
+        userService.createUser(createUserDtoList[1])
+        UserAuth userAuth = new UserAuth("w@w.pl", "12dddasd345" )
+
+        when: "authUser method runs"
+        UserDetails userDetails = authenticateService.authUser(userAuth)
+        then:" user is not authenticated"
         userDetails == null
         thrown(UsernameNotFoundException)
 
