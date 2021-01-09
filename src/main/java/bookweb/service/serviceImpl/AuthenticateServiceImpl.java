@@ -25,6 +25,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
     @Override
     public UserDetails authUser(UserAuth userAuth) throws UsernameNotFoundException{
         Optional<User> user = userRepository.findByEmail(userAuth.getLogin());
+
         if(user.isPresent()){
             if(user.get().getEmail().equals(userAuth.getLogin()) && user.get().getPassword().equals(userAuth.getPassword())){
                 return new org.springframework.security.core.userdetails.User(userAuth.getLogin(), userAuth.getPassword(), new ArrayList<>());
