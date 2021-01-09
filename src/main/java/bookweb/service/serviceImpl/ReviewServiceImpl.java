@@ -9,6 +9,7 @@ import bookweb.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +66,8 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewDto> createReview(CreateReviewDto createReviewDto) {
         Review review = reviewMapper.convert(createReviewDto);
         reviewRepository.save(review);
-        return null;
+        ArrayList<ReviewDto> reviewDtos = new ArrayList<>();
+        reviewDtos.add(reviewDtoMapper.convert(review));
+        return reviewDtos;
     }
 }
