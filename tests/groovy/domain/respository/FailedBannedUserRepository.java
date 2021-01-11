@@ -1,19 +1,23 @@
 package domain.respository;
 
+import bookweb.domain.dto.BannedUserDto;
 import bookweb.domain.entity.BannedUser;
+import bookweb.domain.entity.User;
 import bookweb.domain.repository.BannedUserRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class FailedBannedUserRepository implements BannedUserRepository {
+
+    Map<Long, BannedUser> bannedUsers = new HashMap<>();
+
     @Override
     public List<BannedUser> findAll() {
-        return null;
+        return new ArrayList<>(bannedUsers.values());
     }
 
     @Override
@@ -58,7 +62,10 @@ public class FailedBannedUserRepository implements BannedUserRepository {
 
     @Override
     public <S extends BannedUser> S save(S entity) {
-        return null;
+        Long id = new Random().nextLong();
+        bannedUsers.put(id, entity);
+        entity.setBannedUserId(id);
+        return entity;
     }
 
     @Override
@@ -68,7 +75,7 @@ public class FailedBannedUserRepository implements BannedUserRepository {
 
     @Override
     public Optional<BannedUser> findById(Long aLong) {
-        return Optional.empty();
+        return Optional.ofNullable(bannedUsers.get(aLong));
     }
 
     @Override
