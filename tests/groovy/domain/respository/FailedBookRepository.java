@@ -8,12 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class FailedBookRepository implements BookRepository {
     Map<Long, Book> books = new HashMap<>();
     @Override
     public List<Book> searchBook(String book) {
-        return null;
+        return books.values().stream().filter(book1 -> book1.getTitle().contains(book)).collect(Collectors.toList());
     }
 
     @Override
@@ -43,7 +44,7 @@ public class FailedBookRepository implements BookRepository {
 
     @Override
     public void deleteById(Long aLong) {
-
+        books.remove(aLong);
     }
 
     @Override
@@ -76,7 +77,7 @@ public class FailedBookRepository implements BookRepository {
 
     @Override
     public Optional<Book> findById(Long aLong) {
-        return Optional.empty();
+        return Optional.ofNullable(books.get(aLong));
     }
 
     @Override

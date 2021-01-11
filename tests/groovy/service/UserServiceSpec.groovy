@@ -90,7 +90,7 @@ class UserServiceSpec extends Specification{
     def "should return Optional of nullable when given id is wrong"(){
         given: "2 users are in base"
         userService.createUser(createUserDtoList[0])
-        UserDto userDto = userService.createUser(createUserDtoList[1])
+        userService.createUser(createUserDtoList[1])
 
         when:"getById method runs with given id"
         Optional<UserDto> user = userService.getById(4)
@@ -115,7 +115,7 @@ class UserServiceSpec extends Specification{
     def "should return Optional of nullable when given email is wrong"(){
         given: "2 users are in base"
         userService.createUser(createUserDtoList[0])
-        UserDto userDto = userService.createUser(createUserDtoList[1])
+        userService.createUser(createUserDtoList[1])
 
         when:"getById method runs with given email"
         Optional<UserDto> user = userService.getByEmail("uuu@alee.email")
@@ -168,7 +168,7 @@ class UserServiceSpec extends Specification{
 
     def "should return false for not existing email"(){
         given: "2 users are in base"
-        UserDto userDto = userService.createUser(createUserDtoList[0])
+        userService.createUser(createUserDtoList[0])
         userService.createUser(createUserDtoList[1])
 
         when: "checkIfEmailExists method runs"
