@@ -1,9 +1,7 @@
 package service
 
 import bookweb.domain.dto.BookDto
-import bookweb.domain.dto.CommentDto
 import bookweb.domain.dto.CreateBookDto
-import bookweb.domain.entity.Book
 import bookweb.domain.mapper.BookDtoMapper
 import bookweb.domain.mapper.BookListMapper
 import bookweb.domain.mapper.BookMapper
@@ -19,6 +17,7 @@ class BookServiceSpec extends Specification{
     BookDtoMapper bookDtoMapper = new BookDtoMapper()
     BookRepository bookRepository
     BookService bookService
+    ArrayList<Long> booksId = new ArrayList<>()
 
     def setup(){
         bookRepository = new FailedBookRepository()
@@ -37,8 +36,11 @@ class BookServiceSpec extends Specification{
         bookDto2.setTitle('Jak pisac testy2')
         bookDto2.setYear(2021)
 
-        bookService.createBook(bookDto)
-        bookService.createBook(bookDto2)
+        BookDto newBook = bookService.createBook(bookDto)
+        BookDto newBook2 = bookService.createBook(bookDto2)
+
+        booksId.push(newBook.getBookId())
+        booksId.push(newBook2.getBookId())
     }
 
     def "should return all books"(){
@@ -47,5 +49,67 @@ class BookServiceSpec extends Specification{
 
         then: "should return 2 books"
         bookDtoList.size() == 2
+    }
+
+    def "should create new book"(){
+        given: "new book"
+        CreateBookDto bookDto = new CreateBookDto()
+        bookDto.setAuthor('nowa ksiazka')
+        bookDto.setCover('http://nowaksiazka.pl')
+        bookDto.setPublisher('Jasiek Nowa ksiazka')
+        bookDto.setTitle('Jak pisac testy3')
+        bookDto.setYear(2022)
+
+        when: "createBook method runs"
+        bookService.createBook(bookDto)
+
+        then: "should return 3 books"
+        bookService.findAll().size() == 3
+    }
+
+    def "should return book by given id"(){
+        given: "new book"
+        CreateBookDto bookDto = new CreateBookDto()
+        bookDto.setAuthor('nowa ksiazka po id')
+        bookDto.setCover('http://nowaksiazkapoid.pl')
+        bookDto.setPublisher('Jasiek Nowa ksiazka po id')
+        bookDto.setTitle('Jak pisac testy4')
+        bookDto.setYear(2023)
+        BookDto newBook = bookService.createBook(bookDto)
+
+        when: "findBookById method runs"
+
+        Optional<BookDto> findBook = bookService.findById(newBook.getBookId())
+
+        then: "should return book"
+        findBook.isPresent()
+        findBook.get().getBookId() == newBook.getBookId()
+    }
+
+    def "should delete book by id"(){
+        given: "book id"
+        Long bookId = booksId[0]
+
+        when: "deleteById method runs"
+
+        bookService.deleteById(bookId)
+
+        then: "should delete book"
+
+        bookService.findAll().size() == 1
+    }
+
+    def "should search for book"(){
+        given: "any letter"
+        String findBook = 'Jak pisac testy2'
+
+        when: "searchBook method runs"
+
+        List<BookDto> bookDtoList = bookService.searchBook(findBook)
+
+        then: "should return list of books that match string"
+
+        bookDtoList.size() == 1
+        bookDtoList[0].getTitle() == findBook
     }
 }

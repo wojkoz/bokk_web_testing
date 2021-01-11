@@ -11,9 +11,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class FailedUserRepository implements UserRepository {
-    private static final long firstId = 1L;
-    private static final long secondId = 2L;
-
 
     Map<Long, User> users = new HashMap<>();
 

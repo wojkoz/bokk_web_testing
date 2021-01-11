@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface BookService {
     List<BookDto> findAll();
-    void createBook(CreateBookDto createBookDto);
+    BookDto createBook(CreateBookDto createBookDto);
     Optional<BookDto> findById(Long bookId);
     Optional<BookDto> deleteById(Long bookId);
     List<BookDto> searchBook(String book);
