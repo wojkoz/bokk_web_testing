@@ -80,7 +80,7 @@ class BannedUserServiceSpec extends Specification{
         Optional<BannedUserDto> bannedUser = bannedUserService.findById(userId)
 
         then: "should return banned user"
-
+        !bannedUser.isEmpty()
         bannedUser.isPresent()
         bannedUser.get().getBannedUserId() == userId
     }

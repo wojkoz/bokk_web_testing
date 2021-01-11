@@ -1,8 +1,6 @@
 package domain.respository;
 
-import bookweb.domain.dto.BannedUserDto;
 import bookweb.domain.entity.BannedUser;
-import bookweb.domain.entity.User;
 import bookweb.domain.repository.BannedUserRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -62,9 +60,8 @@ public class FailedBannedUserRepository implements BannedUserRepository {
 
     @Override
     public <S extends BannedUser> S save(S entity) {
-        Long id = new Random().nextLong();
-        bannedUsers.put(id, entity);
-        entity.setBannedUserId(id);
+        bannedUsers.put(entity.getBannedUserId(), entity);
+
         return entity;
     }
 
