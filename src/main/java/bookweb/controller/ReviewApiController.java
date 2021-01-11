@@ -16,7 +16,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api")
-@CrossOrigin(origins = "http://localhost:4200")
 public class ReviewApiController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ReviewApiController.class);
 
@@ -27,7 +26,6 @@ public class ReviewApiController {
     }
 
 
-    @CrossOrigin
     @GetMapping(value = "/reviews/book/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<ReviewDto>> getReviewsByBookId(@PathVariable Long id) {
         LOGGER.info("find reviews by book id: {}", id);
@@ -36,7 +34,6 @@ public class ReviewApiController {
         return new ResponseEntity<>(reviewDtos, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @GetMapping(value = "/reviews/user/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<ReviewDto>> getReviewsByUserId(@PathVariable Long id) {
         LOGGER.info("find reviews by user id: {}", id);
@@ -45,7 +42,6 @@ public class ReviewApiController {
         return new ResponseEntity<>(reviewDtos, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @GetMapping(value = "/reviews/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ReviewDto> getReviewsById(@PathVariable Long id) {
         LOGGER.info("find reviews by id: {}", id);
@@ -56,7 +52,6 @@ public class ReviewApiController {
 
     }
 
-    @CrossOrigin
     @PostMapping(value = "/reviews", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<ReviewDto>> createReview(@RequestBody CreateReviewDto createReviewDto) {
         LOGGER.info("create review: {}", createReviewDto);
@@ -65,7 +60,6 @@ public class ReviewApiController {
         return new ResponseEntity<>(review, HttpStatus.CREATED);
     }
 
-    @CrossOrigin
     @DeleteMapping(value = "/reviews/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<ReviewDto> deleteReview(@PathVariable("id") Long id) {
         LOGGER.info("delete review: {}", id);

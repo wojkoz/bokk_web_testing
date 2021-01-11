@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api")
-@CrossOrigin(origins = "http://localhost:4200")
 public class BookApiController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookApiController.class);
 
@@ -28,7 +27,6 @@ public class BookApiController {
         this.bookService = bookService;
     }
 
-    @CrossOrigin
     @GetMapping(value = "/books", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<BookDto>> getBooks() {
         LOGGER.info("find all books");
@@ -37,7 +35,6 @@ public class BookApiController {
         return new ResponseEntity<>(bookDtoList, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @PostMapping(value = "/books", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Void> createBook(@RequestBody CreateBookDto createBookDto) {
         LOGGER.info("create book: {}", createBookDto);
@@ -46,7 +43,6 @@ public class BookApiController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @CrossOrigin
     @GetMapping(value = "/books/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<BookDto> getBookById(@PathVariable Long id) {
         LOGGER.info("request book with id: {}",id);
@@ -55,7 +51,6 @@ public class BookApiController {
         return bookDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NO_CONTENT));
     }
 
-    @CrossOrigin
     @DeleteMapping(value = "/books/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<BookDto> deleteBook(@PathVariable Long id) {
         LOGGER.info("delete book with id: {}",id);
@@ -65,7 +60,6 @@ public class BookApiController {
                 .orElseGet(() -> new ResponseEntity<>(new BookDto(), HttpStatus.NO_CONTENT));
     }
 
-    @CrossOrigin
     @GetMapping(value = "/search-book/{searchBook}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<BookDto>> searchMovies(@PathVariable String searchBook) {
         LOGGER.info("search book by title");

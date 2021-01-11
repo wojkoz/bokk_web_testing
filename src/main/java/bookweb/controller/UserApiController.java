@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserApiController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserApiController.class);
 
@@ -28,7 +27,6 @@ public class UserApiController {
         this.userService = userService;
     }
 
-    @CrossOrigin
     @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<UserDto>> getAllUsers() {
         LOGGER.info("find all users");
@@ -37,7 +35,6 @@ public class UserApiController {
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @PostMapping(value = "/users/create", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUserDto createUserDto) {
         LOGGER.info("create user: {}", createUserDto);
@@ -52,7 +49,6 @@ public class UserApiController {
 
     }
 
-    @CrossOrigin
     @PutMapping(value = "/users/update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto updateUser) {
         LOGGER.info("update user: {}", updateUser);
@@ -68,7 +64,6 @@ public class UserApiController {
     }
 
 
-    @CrossOrigin
     @GetMapping(value = "/users/id/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
         LOGGER.info("find  user by id: {}", id);
@@ -79,7 +74,6 @@ public class UserApiController {
 
     }
 
-    @CrossOrigin
     @GetMapping(value = "/users/email/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDto> getUserByEmail(@PathVariable("email") String email) {
         LOGGER.info("find  user by email: {}", email);
@@ -90,7 +84,6 @@ public class UserApiController {
 
     }
 
-    @CrossOrigin
     @DeleteMapping(value = "/users/email/{email}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDto> deleteUserByEmail(@PathVariable("email") String email) {
         LOGGER.info("delete  user by email: {}", email);
@@ -101,7 +94,6 @@ public class UserApiController {
 
     }
 
-    @CrossOrigin
     @DeleteMapping(value = "/users/id/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<UserDto> deleteUserById(@PathVariable("id") Long id) {
         LOGGER.info("delete  user by id: {}", id);
@@ -112,7 +104,6 @@ public class UserApiController {
 
     }
 
-    @CrossOrigin
     @PostMapping(value = "/user-ban/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Void> banUser(@PathVariable Long id) {
         LOGGER.info("ban user: {}", id);

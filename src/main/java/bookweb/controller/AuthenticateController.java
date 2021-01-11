@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 public class AuthenticateController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticateController.class);
@@ -36,7 +35,6 @@ public class AuthenticateController {
     }
 
 
-    @CrossOrigin
     @PostMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<?> authUser(@RequestBody UserAuth userAuth) {
         LOGGER.info("auth user: {}", userAuth.getLogin());

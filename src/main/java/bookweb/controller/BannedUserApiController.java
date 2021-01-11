@@ -20,20 +20,16 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api")
-@CrossOrigin(origins = "http://localhost:4200")
 public class BannedUserApiController {
     private static final Logger LOGGER = LoggerFactory.getLogger(BannedUserApiController.class);
 
     private final BannedUserService bannedUserService;
-    private final UserService userService;
 
     @Autowired
-    public BannedUserApiController(BannedUserService bannedUserService, UserService userService) {
+    public BannedUserApiController(BannedUserService bannedUserService) {
         this.bannedUserService = bannedUserService;
-        this.userService = userService;
     }
 
-    @CrossOrigin
     @GetMapping(value = "/banned-user", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<BannedUserDto>> getBannedUsers() {
         LOGGER.info("find all banned users");
@@ -42,7 +38,6 @@ public class BannedUserApiController {
         return new ResponseEntity<>(bannedUserDtoList, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @GetMapping(value = "/banned-user/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<BannedUserDto> getBannedUserById(@PathVariable Long id) {
         LOGGER.info("request banned user with id: {}",id);

@@ -22,7 +22,7 @@ public class Application {
     public FilterRegistrationBean<CorsFilter> simpleCorsFilter(){
 
         List<String> origins = new ArrayList<>();
-        origins.add("http://localhost:4200");
+        origins.add("*");
         List<String> methodsHeaders = new ArrayList<>();
         methodsHeaders.add("*");
 

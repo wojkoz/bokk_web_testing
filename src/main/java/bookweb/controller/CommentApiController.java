@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api")
-@CrossOrigin(origins = "http://localhost:4200")
 public class CommentApiController {
     private static final Logger LOGGER = LoggerFactory.getLogger(CommentApiController.class);
 
@@ -28,7 +27,6 @@ public class CommentApiController {
         this.commentService = commentService;
     }
 
-    @CrossOrigin
     @GetMapping(value = "/comments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<CommentDto>> getComments() {
         LOGGER.info("find all comments");
@@ -37,7 +35,6 @@ public class CommentApiController {
         return new ResponseEntity<>(commentDtoList, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @PostMapping(value = "/comments", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Void> createComment(@RequestBody CreateCommentDto createCommentDto) {
         LOGGER.info("create comment: {}", createCommentDto);
@@ -46,7 +43,6 @@ public class CommentApiController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @CrossOrigin
     @GetMapping(value = "/comments/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommentDto> getCommentById(@PathVariable Long id) {
         LOGGER.info("request comment with id: {}",id);
@@ -55,7 +51,6 @@ public class CommentApiController {
         return commentDto.map(dto -> new ResponseEntity<>(dto, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(null, HttpStatus.NO_CONTENT));
     }
 
-    @CrossOrigin
     @DeleteMapping(value = "/comments/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<CommentDto> deleteComment(@PathVariable Long id) {
         LOGGER.info("delete comment with id: {}",id);
@@ -65,7 +60,6 @@ public class CommentApiController {
                 .orElseGet(() -> new ResponseEntity<>(new CommentDto(), HttpStatus.NO_CONTENT));
     }
 
-    @CrossOrigin
     @GetMapping(value = "/comments/user/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<CommentDto>> getUserComments(@PathVariable Long id) {
         LOGGER.info("get comments with user id: {}",id);
@@ -74,7 +68,6 @@ public class CommentApiController {
         return  new ResponseEntity<>(commentDto, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @GetMapping(value = "/comments/book/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<CommentDto>> getBookComments(@PathVariable Long id) {
         LOGGER.info("get comments with book id: {}",id);
