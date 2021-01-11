@@ -32,8 +32,7 @@ class BannedUserServiceSpec extends Specification{
     UserListMapper listMapper = new UserListMapper()
     UserMapper userMapper = new UserMapper()
     UserRepository userRepository = new FailedUserRepository()
-
-    List<CreateUserDto> createUserDtoList
+    ArrayList<UserDto> createUserList = new ArrayList<>()
 
     def setup(){
         userService = new UserServiceImpl(userDtoMapper, listMapper, userMapper, userRepository, bannedUserRepository)
@@ -53,38 +52,36 @@ class BannedUserServiceSpec extends Specification{
         userDto.setName("Wojciech")
         userDto.setSurname("Koziol")
 
-        createUserDtoList = new ArrayList<>()
-        createUserDtoList.push(userDto)
-        createUserDtoList.push(userDto2)
+        UserDto user = userService.createUser(userDto)
+        UserDto user2 = userService.createUser(userDto2)
+
+        createUserList.push(user)
+        createUserList.push(user2)
     }
 
     def "should return list of all banned users"() {
-        given: "create 2 users then ban 2 users"
-        UserDto userDto = userService.createUser(createUserDtoList[0])
-        UserDto userDto2 = userService.createUser(createUserDtoList[1])
-
-        userService.banUser(userDto.getUserId())
-        userService.banUser(userDto2.getUserId())
+        given: "ban 2 users"
+        userService.banUser(createUserList[0].getUserId())
+        userService.banUser(createUserList[1].getUserId())
 
         when: "on call method findAll()"
-        List<UserDto> bannedUsers = bannedUserService.findAll()
+        ArrayList<BannedUserDto> bannedUsers = bannedUserService.findAll()
 
         then: "return list of all banned users"
         bannedUsers.size() == 2
     }
 
     def "should return banned user by given id"() {
-        given: "create user then ban user"
-        UserDto userDto = userService.createUser(createUserDtoList[0])
-
-        userService.banUser(userDto.getUserId())
+        given: "ban user"
+        Long userId = createUserList[0].getUserId()
+        userService.banUser(userId)
 
         when: "on call method findById()"
-        Optional<UserDto> bannedUser = bannedUserService.findById(userDto.getUserId())
+        Optional<BannedUserDto> bannedUser = bannedUserService.findById(userId)
 
-        then: "should return user"
+        then: "should return banned user"
 
         bannedUser.isPresent()
-        bannedUser.get().getUserId() == userDto.getUserId()
+        bannedUser.get().getBannedUserId() == userId
     }
 }

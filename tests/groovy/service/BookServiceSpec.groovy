@@ -44,7 +44,6 @@ class BookServiceSpec extends Specification{
     def "should return all books"(){
         when: "findAll method runs"
         List<BookDto> bookDtoList = bookService.findAll()
-        println bookDtoList
 
         then: "should return 2 books"
         bookDtoList.size() == 2
